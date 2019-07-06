@@ -1,0 +1,88 @@
+C51 COMPILER V7.06   MAIN                                                                  07/07/2019 00:41:21 PAGE 1   
+
+
+C51 COMPILER V7.06, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN main.obj
+COMPILER INVOKED BY: D:\duanxueqi\keil\C51\BIN\C51.EXE MAIN\main.c BROWSE INCDIR(D:\DUANXUEQI\KEIL\CODE\CONGJI1\UART\) D
+                    -EBUG OBJECTEXTEND PRINT(.\main.lst) OBJECT(main.obj)
+
+stmt level    source
+
+   1          #include <reg51.h>
+   2          #include <intrins.h>
+   3          #include "uart.h"
+   4          
+   5          #define uchar unsigned char
+   6          
+   7          sbit STAR = P2^3;
+   8          sbit OE = P2^4;
+   9          
+  10          uchar vcc = 5;
+  11          uchar temp, v;
+  12          
+  13          void delay(uchar m)             //@11.0592MHz  100us
+  14          {
+  15   1              uchar i;
+  16   1      
+  17   1              for(m; m > 0; m--) {
+  18   2                      _nop_();
+  19   2                      i = 43;
+  20   2                      while (--i);
+  21   2              }
+  22   1      }
+  23          
+  24          
+  25          void init() {
+  26   1              IT0 = 1;   //下降沿触发
+  27   1              EX0 = 0;   //关外部中断
+  28   1              EA = 1;    //总中断
+  29   1              
+  30   1              P2 &= 0xf8; //选择通道0                         
+  31   1              OE = 0;
+  32   1              STAR = 0;
+  33   1              STAR = 1;
+  34   1              STAR = 0; //开始转化（给100ns高电平）
+  35   1      
+  36   1              uartInit();
+  37   1      }
+  38          
+  39          
+  40          void main() {
+  41   1              
+  42   1              init();
+  43   1              while(1) {
+  44   2                      
+  45   2              
+  46   2              }
+  47   1      }
+  48          
+  49          
+  50          void int0() interrupt 1 {
+  51   1              EX0 = 0;
+  52   1              OE = 1; //允许输出
+  53   1              temp = P0; //取值
+  54   1              v = (temp * vcc) / 255;         //转化成电压
+C51 COMPILER V7.06   MAIN                                                                  07/07/2019 00:41:21 PAGE 2   
+
+  55   1              OE = 0;
+  56   1              //uartWriteOne(temp);           //发送
+  57   1              delay(100);
+  58   1              EX0 = 1;
+  59   1              STAR = 0;
+  60   1              STAR = 1;
+  61   1              STAR = 0; //开启新的转化
+  62   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     98    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      3    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

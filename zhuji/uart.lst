@@ -1,0 +1,55 @@
+C51 COMPILER V7.06   UART                                                                  07/07/2019 00:43:35 PAGE 1   
+
+
+C51 COMPILER V7.06, COMPILATION OF MODULE UART
+OBJECT MODULE PLACED IN uart.obj
+COMPILER INVOKED BY: D:\duanxueqi\keil\C51\BIN\C51.EXE UART\uart.c BROWSE INCDIR(D:\duanxueqi\keil\code\zhuji\DISPLAY\;D
+                    -:\duanxueqi\keil\code\zhuji\UART\;D:\duanxueqi\keil\code\zhuji\KEY\) DEBUG OBJECTEXTEND PRINT(.\uart.lst) OBJECT(uart.ob
+                    -j)
+
+stmt level    source
+
+   1          #include <reg51.h>
+   2          #include "uart.h"
+   3          #include "display.h"
+   4          #define uchar unsigned char
+   5          void uartInit() {
+   6   1              TMOD = 0x20; //方式2
+   7   1              TH1 = 0xfd;  //9600bps
+   8   1              TL1 = 0xfd; 
+   9   1              REN = 1;        //允许串口接收
+  10   1              SM0 = 1;        
+  11   1              SM1 = 1; //工作方式3 主从
+  12   1      
+  13   1              ES = 0;         //串口中断      
+  14   1              TR1 = 1;        //启动定时器1
+  15   1              EA = 1;         //总中断
+  16   1      }
+  17          
+  18          void uartWrite(uchar addr, uchar str) {
+  19   1              TB8 = 1;  // 1发送地址，0发送数据
+  20   1              SBUF = addr;
+  21   1          while(!TI);    //判断是否发送成功（发送成功后TI会置1，需手动清0）
+  22   1          TI = 0;
+  23   1          TB8 = 0;        //发送数据
+  24   1              
+  25   1              SBUF = str;
+  26   1          while(!TI);
+  27   1              TI = 0;     
+  28   1      }
+  29          
+  30          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     41    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

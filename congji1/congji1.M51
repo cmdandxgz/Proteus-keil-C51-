@@ -1,0 +1,234 @@
+BL51 BANKED LINKER/LOCATER V5.03                                                        07/07/2019  00:41:22  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V5.03, INVOKED BY:
+D:\DUANXUEQI\KEIL\C51\BIN\BL51.EXE main.obj, uart.obj TO congji1
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  main.obj (MAIN)
+  uart.obj (UART)
+  D:\DUANXUEQI\KEIL\C51\LIB\C51S.LIB (?C_STARTUP)
+  D:\DUANXUEQI\KEIL\C51\LIB\C51S.LIB (?C_INIT)
+
+
+LINK MAP OF MODULE:  congji1 (MAIN)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0003H     UNIT         ?DT?MAIN
+            DATA    000BH     0003H     UNIT         ?DT?UART
+            IDATA   000EH     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+                    0003H     0008H                  *** GAP ***
+            CODE    000BH     0003H     ABSOLUTE     
+                    000EH     0015H                  *** GAP ***
+            CODE    0023H     0003H     ABSOLUTE     
+                    0026H     07DAH                  *** GAP ***
+            CODE    0800H     008CH     UNIT         ?C_C51STARTUP
+            CODE    088CH     0042H     UNIT         ?PR?UARTREAD?UART
+            CODE    08CEH     003AH     UNIT         ?PR?INT0?MAIN
+            CODE    0908H     0018H     UNIT         ?PR?UARTINIT?UART
+            CODE    0920H     0014H     UNIT         ?PR?INIT?MAIN
+            CODE    0934H     000FH     UNIT         ?PR?_DELAY?MAIN
+            CODE    0943H     0008H     UNIT         ?PR?_UARTWRITEONE?UART
+            CODE    094BH     0007H     UNIT         ?C_INITSEG
+            CODE    0952H     0005H     UNIT         ?PR?MAIN?MAIN
+
+
+
+OVERLAY MAP OF MODULE:   congji1 (MAIN)
+
+
+SEGMENT
+  +--> CALLED SEGMENT
+---------------------
+?PR?INT0?MAIN
+  +--> ?PR?_DELAY?MAIN
+
+*** NEW ROOT ***************************************************
+
+?C_C51STARTUP
+  +--> ?PR?MAIN?MAIN
+BL51 BANKED LINKER/LOCATER V5.03                                                      07/07/2019  00:41:22  PAGE 2
+
+
+  +--> ?C_INITSEG
+
+?PR?MAIN?MAIN
+  +--> ?PR?INIT?MAIN
+
+?PR?INIT?MAIN
+  +--> ?PR?UARTINIT?UART
+
+
+
+SYMBOL TABLE OF MODULE:  congji1 (MAIN)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        MAIN
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0080H         PUBLIC        P0
+  D:00A0H         PUBLIC        P2
+  B:00A8H.7       PUBLIC        EA
+  B:00A0H.4       PUBLIC        OE
+  C:0952H         PUBLIC        main
+  C:0920H         PUBLIC        init
+  D:0008H         PUBLIC        temp
+  B:00A0H.3       PUBLIC        STAR
+  D:0009H         PUBLIC        vcc
+  B:00A8H.0       PUBLIC        EX0
+  B:0088H.0       PUBLIC        IT0
+  C:0934H         PUBLIC        _delay
+  D:000AH         PUBLIC        v
+  C:08CEH         PUBLIC        int0
+  -------         PROC          _DELAY
+  D:0007H         SYMBOL        m
+  -------         DO            
+  D:0006H         SYMBOL        i
+  -------         ENDDO         
+  C:0934H         LINE#         13
+  C:0934H         LINE#         14
+  C:0934H         LINE#         17
+  C:093AH         LINE#         18
+  C:093BH         LINE#         19
+  C:093DH         LINE#         20
+  C:093FH         LINE#         21
+  C:0942H         LINE#         22
+  -------         ENDPROC       _DELAY
+  -------         PROC          INIT
+  C:0920H         LINE#         25
+  C:0920H         LINE#         26
+  C:0922H         LINE#         27
+  C:0924H         LINE#         28
+  C:0926H         LINE#         30
+  C:0929H         LINE#         31
+  C:092BH         LINE#         32
+  C:092DH         LINE#         33
+  C:092FH         LINE#         34
+  C:0931H         LINE#         36
+  -------         ENDPROC       INIT
+BL51 BANKED LINKER/LOCATER V5.03                                                      07/07/2019  00:41:22  PAGE 3
+
+
+  -------         PROC          MAIN
+  C:0952H         LINE#         40
+  C:0952H         LINE#         42
+  C:0955H         LINE#         43
+  C:0955H         LINE#         46
+  -------         ENDPROC       MAIN
+  -------         PROC          INT0
+  C:08CEH         LINE#         50
+  C:08DBH         LINE#         51
+  C:08DDH         LINE#         52
+  C:08DFH         LINE#         53
+  C:08E2H         LINE#         54
+  C:08EEH         LINE#         55
+  C:08F0H         LINE#         57
+  C:08F5H         LINE#         58
+  C:08F7H         LINE#         59
+  C:08F9H         LINE#         60
+  C:08FBH         LINE#         61
+  C:08FDH         LINE#         62
+  -------         ENDPROC       INT0
+  -------         ENDMOD        MAIN
+
+  -------         MODULE        UART
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:00A0H         PUBLIC        P2
+  B:00A8H.7       PUBLIC        EA
+  B:00A8H.4       PUBLIC        ES
+  B:0098H.0       PUBLIC        RI
+  D:000BH         PUBLIC        readData
+  B:0098H.1       PUBLIC        TI
+  D:000CH         PUBLIC        readSbuf
+  D:0099H         PUBLIC        SBUF
+  D:0089H         PUBLIC        TMOD
+  D:000DH         PUBLIC        readStar
+  B:00A0H.3       PUBLIC        STAR
+  C:088CH         PUBLIC        uartRead
+  B:00A8H.0       PUBLIC        EX0
+  D:008DH         PUBLIC        TH1
+  B:0098H.7       PUBLIC        SM0
+  B:0098H.6       PUBLIC        SM1
+  D:008BH         PUBLIC        TL1
+  C:0943H         PUBLIC        _uartWriteOne
+  B:0098H.5       PUBLIC        SM2
+  C:0908H         PUBLIC        uartInit
+  B:0088H.6       PUBLIC        TR1
+  B:0098H.4       PUBLIC        REN
+  -------         PROC          UARTINIT
+  C:0908H         LINE#         10
+  C:0908H         LINE#         11
+  C:090BH         LINE#         12
+  C:090EH         LINE#         13
+  C:0911H         LINE#         14
+  C:0913H         LINE#         15
+  C:0915H         LINE#         16
+  C:0917H         LINE#         17
+  C:0919H         LINE#         19
+  C:091BH         LINE#         20
+BL51 BANKED LINKER/LOCATER V5.03                                                      07/07/2019  00:41:22  PAGE 4
+
+
+  C:091DH         LINE#         21
+  C:091FH         LINE#         22
+  -------         ENDPROC       UARTINIT
+  -------         PROC          _UARTWRITEONE
+  D:0007H         SYMBOL        str
+  C:0943H         LINE#         24
+  C:0943H         LINE#         25
+  C:0945H         LINE#         26
+  C:0948H         LINE#         27
+  C:094AH         LINE#         28
+  -------         ENDPROC       _UARTWRITEONE
+  -------         PROC          UARTREAD
+  C:088CH         LINE#         30
+  C:0890H         LINE#         31
+  C:0892H         LINE#         32
+  C:0895H         LINE#         33
+  C:0898H         LINE#         34
+  C:089CH         LINE#         35
+  C:089FH         LINE#         36
+  C:08A4H         LINE#         37
+  C:08A6H         LINE#         38
+  C:08A8H         LINE#         39
+  C:08AAH         LINE#         40
+  C:08ACH         LINE#         41
+  C:08B2H         LINE#         42
+  C:08B4H         LINE#         43
+  C:08B6H         LINE#         44
+  C:08B6H         LINE#         45
+  C:08B9H         LINE#         46
+  C:08BBH         LINE#         47
+  C:08BBH         LINE#         48
+  C:08BBH         LINE#         49
+  C:08C0H         LINE#         50
+  C:08C3H         LINE#         51
+  C:08C5H         LINE#         52
+  C:08C5H         LINE#         53
+  C:08C7H         LINE#         54
+  C:08C9H         LINE#         55
+  -------         ENDPROC       UARTREAD
+  -------         ENDMOD        UART
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_UARTWRITEONE?UART
+
+******************************************************************************
+* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 00DCH BYTE (10%) *
+******************************************************************************
+
+Program Size: data=15.0 xdata=0 code=352
+LINK/LOCATE RUN COMPLETE.  1 WARNING(S),  0 ERROR(S)

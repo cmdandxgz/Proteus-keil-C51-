@@ -1,0 +1,30 @@
+C51 COMPILER V7.06   ADC                                                                   07/04/2019 20:05:03 PAGE 1   
+
+
+C51 COMPILER V7.06, COMPILATION OF MODULE ADC
+OBJECT MODULE PLACED IN adc.obj
+COMPILER INVOKED BY: D:\duanxueqi\keil\C51\BIN\C51.EXE ADC\adc.c BROWSE INCDIR(D:\duanxueqi\keil\code\congji1\ADC\) DEBU
+                    -G OBJECTEXTEND PRINT(.\adc.lst) OBJECT(adc.obj)
+
+stmt level    source
+
+   1          #include "adc.h"
+   2          
+   3          void getDianYa() {
+   4   1      
+   5   1      
+   6   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =      1    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

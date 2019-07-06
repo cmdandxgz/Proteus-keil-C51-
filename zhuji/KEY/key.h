@@ -1,0 +1,2 @@
+void keyInit();
+void keyScand();

@@ -1,0 +1,87 @@
+C51 COMPILER V7.06   DISPLAY                                                               07/07/2019 00:43:35 PAGE 1   
+
+
+C51 COMPILER V7.06, COMPILATION OF MODULE DISPLAY
+OBJECT MODULE PLACED IN display.obj
+COMPILER INVOKED BY: D:\duanxueqi\keil\C51\BIN\C51.EXE DISPLAY\display.c BROWSE INCDIR(D:\duanxueqi\keil\code\zhuji\DISP
+                    -LAY\;D:\duanxueqi\keil\code\zhuji\UART\;D:\duanxueqi\keil\code\zhuji\KEY\) DEBUG OBJECTEXTEND PRINT(.\display.lst) OBJEC
+                    -T(display.obj)
+
+stmt level    source
+
+   1          #include "display.h"
+   2          #include <reg51.h>
+   3          #include <intrins.h>
+   4          #define uchar unsigned char
+   5          
+   6          sbit dula=P2^6;         //段选
+   7          sbit wela=P2^7;         //位选
+   8          
+   9          uchar code weiTable[]={0x01,0x02,0x04,0x08,0x10,0x20,0x40,0x80,0x00};           //数码管各位的码表
+  10          uchar code duanTable[]={0xc0,0xf9,0xa4,0xb0,0x99,0x92,0x82,0xf8,0x80,0x90,0xff};        //共阳极
+  11          
+  12          void delay(uchar m)             //@11.0592MHz  100us
+  13          {
+  14   1              uchar i;
+  15   1      
+  16   1              for(m; m > 0; m--) {
+  17   2                      _nop_();
+  18   2                      i = 43;
+  19   2                      while (--i);
+  20   2              }
+  21   1      }
+  22          
+  23          void displayOne(int wei, int num) {
+  24   1              P0 = weiTable[wei];                     //先位选在段选，，不然会出错！！！！！！
+  25   1              wela = 1;
+  26   1              wela = 0;
+  27   1      
+  28   1              P0 = duanTable[num];
+  29   1              dula = 1;
+  30   1              dula = 0;
+  31   1              
+  32   1      
+  33   1      
+  34   1              
+  35   1      }
+  36          
+  37          void displayAll(int congji, uchar num) {        
+  38   1              int x = 10;
+  39   1              displayOne(0, congji/10);               // 显示从机号
+  40   1              delay(x);
+  41   1              displayOne(1, congji%10);
+  42   1              delay(x);
+  43   1              
+  44   1              displayOne(5, num/100);         //显示采集数据
+  45   1              delay(x);
+  46   1              displayOne(6, (num%100)/10);
+  47   1              delay(x);
+  48   1              displayOne(7, num%10);
+  49   1              delay(x);
+  50   1      }
+  51          
+  52          void displayClear() {
+  53   1              uchar i;
+C51 COMPILER V7.06   DISPLAY                                                               07/07/2019 00:43:35 PAGE 2   
+
+  54   1              for(i = 0; i < 8; i++) {
+  55   2                      displayOne(i, 10);
+  56   2              }
+  57   1              P0 = weiTable[8];                       
+  58   1              wela = 1;
+  59   1              wela = 0;
+  60   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    170    ----
+   CONSTANT SIZE    =     20    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       3
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

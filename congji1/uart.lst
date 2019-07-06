@@ -1,0 +1,81 @@
+C51 COMPILER V7.06   UART                                                                  07/07/2019 00:41:21 PAGE 1   
+
+
+C51 COMPILER V7.06, COMPILATION OF MODULE UART
+OBJECT MODULE PLACED IN uart.obj
+COMPILER INVOKED BY: D:\duanxueqi\keil\C51\BIN\C51.EXE UART\uart.c BROWSE INCDIR(D:\DUANXUEQI\KEIL\CODE\CONGJI1\UART\) D
+                    -EBUG OBJECTEXTEND PRINT(.\uart.lst) OBJECT(uart.obj)
+
+stmt level    source
+
+   1          #include "uart.h"
+   2          #include <reg51.h>
+   3          
+   4          #define uchar unsigned char
+   5          
+   6          sbit STAR = P2^3;
+   7          uchar readSbuf, readData;
+   8          uchar readStar = 0;
+   9          
+  10          void uartInit() {
+  11   1              TMOD = 0x20; //方式2
+  12   1              TH1 = 0xfd;  //9600bps
+  13   1              TL1 = 0xfd; 
+  14   1              REN = 1;        //允许串口接收
+  15   1              SM0 = 1;        
+  16   1              SM1 = 1; //工作方式3 主从
+  17   1              SM2 = 1;  //只接受地址（主机TB8=1的时候。只需从机设置）
+  18   1      
+  19   1              ES = 1;         //串口中断      
+  20   1              TR1 = 1;        //启动定时器1
+  21   1              EA = 1;         //总中断
+  22   1      }
+  23          
+  24          void uartWriteOne(uchar str) {
+  25   1                      SBUF = str;
+  26   1              while(!TI);
+  27   1                      TI = 0;         
+  28   1      }
+  29          
+  30          void uartRead() interrupt 4 {
+  31   1              ES = 0;
+  32   1              if(RI) {
+  33   2                      readSbuf = SBUF;
+  34   2                      if(readStar) {
+  35   3                              readData = readSbuf;
+  36   3                              if(readData == 1) {//开始
+  37   4                                      EX0 = 1;
+  38   4                                      STAR = 0;
+  39   4                                      STAR = 1;
+  40   4                                      STAR = 0;
+  41   4                              } else if(readData == 0) {//结束
+  42   4                                      EX0 = 0;
+  43   4                                      STAR = 0;
+  44   4                              }
+  45   3                              readStar = 0;   //本次结束
+  46   3                              SM2 = 1;        //接受地址
+  47   3                      }
+  48   2              }
+  49   1              if(readSbuf == 20) {
+  50   2                      readStar = 1;  //开始接受数据
+  51   2                      SM2 = 0;  //接受数据模式
+  52   2              }
+  53   1              RI = 0;
+  54   1              ES = 1;
+C51 COMPILER V7.06   UART                                                                  07/07/2019 00:41:21 PAGE 2   
+
+  55   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     98    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      3    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
