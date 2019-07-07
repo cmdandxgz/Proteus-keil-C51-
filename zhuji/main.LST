@@ -1,10 +1,11 @@
-C51 COMPILER V7.06   MAIN                                                                  07/07/2019 00:43:35 PAGE 1   
+C51 COMPILER V7.06   MAIN                                                                  07/07/2019 16:56:14 PAGE 1   
 
 
 C51 COMPILER V7.06, COMPILATION OF MODULE MAIN
 OBJECT MODULE PLACED IN main.OBJ
 COMPILER INVOKED BY: D:\duanxueqi\keil\C51\BIN\C51.EXE main.c BROWSE INCDIR(D:\duanxueqi\keil\code\zhuji\DISPLAY\;D:\dua
-                    -nxueqi\keil\code\zhuji\UART\;D:\duanxueqi\keil\code\zhuji\KEY\) DEBUG OBJECTEXTEND
+                    -nxueqi\keil\code\zhuji\UART\;D:\duanxueqi\keil\code\zhuji\KEY\;D:\duanxueqi\keil\code\;D:\DUANXUEQI\KEIL\CODE\ZHUJI\DAC\
+                    -) DEBUG OBJECTEXTEND
 
 stmt level    source
 
@@ -12,43 +13,94 @@ stmt level    source
    2          #include "display.h"
    3          #include "uart.h"
    4          #include "key.h"
-   5          
-   6          #define uchar unsigned char
-   7          uchar addr = 20;
-   8          uchar readSbuf,readData;
-   9          void init() {
-  10   1              uartInit();
-  11   1              keyInit();
-  12   1      }
-  13          
-  14          void main() {
-  15   1              init();
-  16   1              displayClear();
-  17   1              while(1) {              
-  18   2                      //displayAll(20, readData);
-  19   2              }
+   5          #include "dac.h"
+   6          #include "include.h"
+   7          
+   8          
+   9          uchar readSbuf;
+  10          uchar readData;
+  11          uchar addr = CONG1;
+  12          int time = 0;
+  13          void time0Init() {
+  14   1              TMOD |= 0x01;
+  15   1              TH0 = 0xFC;     //1ms
+  16   1              TL0 = 0x18;
+  17   1              ET0 = 1;
+  18   1              TR0 = 0;
+  19   1              EA = 1;
   20   1      }
   21          
-  22          void uartRead() interrupt 4 {
-  23   1              ES = 0;
-  24   1              if(RI) {
-  25   2                      readSbuf = SBUF;
-  26   2                      readData = readSbuf;
-  27   2                      displayAll(addr, readData);
-  28   2              }
-  29   1              RI = 0;
-  30   1              ES = 1;
-  31   1      }
-  32          
-  33          
+  22          void init() {
+  23   1              time0Init();
+  24   1              uartInit();
+  25   1              keyInit();
+  26   1              dacInit();
+  27   1      }
+  28          
+  29          void main() {
+  30   1              init();
+  31   1              displayClear();
+  32   1              while(1) {              
+  33   2                      delay(1000);
+  34   2                      outDac(readData/2);
+  35   2              }
+  36   1      }
+  37          
+  38          void uartRead() interrupt 4 {
+  39   1              TR0 = 0;
+  40   1              
+  41   1              ES = 0;
+  42   1              if(RI) {
+  43   2                      readSbuf = SBUF;
+  44   2                      readData = readSbuf;
+  45   2                      //v = (readData*VCC)/255;
+  46   2                      if(addr == CONG1) {
+  47   3                              displayAll(20, readSbuf);
+  48   3                      } else if(addr == CONG2) {
+  49   3                              displayAll(30, readSbuf);
+  50   3                      }
+  51   2              }
+  52   1              RI = 0;
+  53   1              ES = 1;
+C51 COMPILER V7.06   MAIN                                                                  07/07/2019 16:56:14 PAGE 2   
+
+  54   1              
+  55   1              TR0 = 1;
+  56   1      }
+  57          
+  58          void time0() interrupt 1 {
+  59   1              ES = 0;
+  60   1      
+  61   1              TR0 = 0;
+  62   1              TH0 = 0x0FC;    //1ms
+  63   1              TL0 = 0x18;
+  64   1              if(star == 1) {
+  65   2                      time++;
+  66   2                      if(time > 2000) {
+  67   3                              time = 0;
+  68   3                              if(addr == CONG1) {
+  69   4                                      addr = CONG2;
+  70   4                              } else {
+  71   4                                      addr = CONG1;
+  72   4                              }
+  73   3                      }
+  74   2                      if(time%30 == 0) {
+  75   3                      //      displayAll(addr,CMD);
+  76   3                              uartWrite(addr, CMD);
+  77   3                      }
+  78   2              }       
+  79   1              TR0 = 1;
+  80   1      
+  81   1              ES = 1;
+  82   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =     94    ----
+   CODE SIZE        =    285    ----
    CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
-   DATA SIZE        =      3    ----
+   DATA SIZE        =      5    ----
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----
 END OF MODULE INFORMATION.

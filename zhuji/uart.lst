@@ -1,44 +1,47 @@
-C51 COMPILER V7.06   UART                                                                  07/07/2019 00:43:35 PAGE 1   
+C51 COMPILER V7.06   UART                                                                  07/07/2019 16:56:14 PAGE 1   
 
 
 C51 COMPILER V7.06, COMPILATION OF MODULE UART
 OBJECT MODULE PLACED IN uart.obj
 COMPILER INVOKED BY: D:\duanxueqi\keil\C51\BIN\C51.EXE UART\uart.c BROWSE INCDIR(D:\duanxueqi\keil\code\zhuji\DISPLAY\;D
-                    -:\duanxueqi\keil\code\zhuji\UART\;D:\duanxueqi\keil\code\zhuji\KEY\) DEBUG OBJECTEXTEND PRINT(.\uart.lst) OBJECT(uart.ob
-                    -j)
+                    -:\duanxueqi\keil\code\zhuji\UART\;D:\duanxueqi\keil\code\zhuji\KEY\;D:\duanxueqi\keil\code\;D:\DUANXUEQI\KEIL\CODE\ZHUJI
+                    -\DAC\) DEBUG OBJECTEXTEND PRINT(.\uart.lst) OBJECT(uart.obj)
 
 stmt level    source
 
    1          #include <reg51.h>
    2          #include "uart.h"
    3          #include "display.h"
-   4          #define uchar unsigned char
-   5          void uartInit() {
-   6   1              TMOD = 0x20; //方式2
-   7   1              TH1 = 0xfd;  //9600bps
-   8   1              TL1 = 0xfd; 
-   9   1              REN = 1;        //允许串口接收
-  10   1              SM0 = 1;        
-  11   1              SM1 = 1; //工作方式3 主从
-  12   1      
-  13   1              ES = 0;         //串口中断      
-  14   1              TR1 = 1;        //启动定时器1
-  15   1              EA = 1;         //总中断
-  16   1      }
-  17          
-  18          void uartWrite(uchar addr, uchar str) {
-  19   1              TB8 = 1;  // 1发送地址，0发送数据
-  20   1              SBUF = addr;
-  21   1          while(!TI);    //判断是否发送成功（发送成功后TI会置1，需手动清0）
-  22   1          TI = 0;
-  23   1          TB8 = 0;        //发送数据
-  24   1              
-  25   1              SBUF = str;
-  26   1          while(!TI);
-  27   1              TI = 0;     
-  28   1      }
-  29          
-  30          
+   4          #include "include.h"
+   5          
+   6          void uartInit() {
+   7   1              TMOD = 0x20; //方式2
+   8   1              TH1 = 0xfd;  //9600bps
+   9   1              TL1 = 0xfd;
+  10   1      //      REN = 1;        //允许串口接收
+  11   1      //      SM0 = 1;        
+  12   1      //      SM1 = 1; //工作方式3 主从 //该方法初始化串口有毒，别用，垃圾软件。用SCON
+  13   1              SCON = 0xd0; 
+  14   1      
+  15   1              ES = 0;         //串口中断      
+  16   1              TR1 = 1;        //启动定时器1
+  17   1              EA = 1;         //总中断
+  18   1      
+  19   1              SBUF = 0x00;
+  20   1      }
+  21          
+  22          void uartWrite(uchar addr, uchar str) {
+  23   1              TB8 = 1;  // 1发送地址，0发送数据
+  24   1              SBUF = addr;
+  25   1          while(!TI);    //判断是否发送成功（发送成功后TI会置1，需手动清0）
+  26   1          TI = 0;
+  27   1      
+  28   1          TB8 = 0;        //发送数据
+  29   1              SBUF = str;
+  30   1          while(!TI);
+  31   1              TI = 0;     
+  32   1      }
+  33          
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE

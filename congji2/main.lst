@@ -1,9 +1,9 @@
-C51 COMPILER V7.06   MAIN                                                                  07/07/2019 14:18:25 PAGE 1   
+C51 COMPILER V7.06   MAIN                                                                  07/07/2019 15:58:51 PAGE 1   
 
 
 C51 COMPILER V7.06, COMPILATION OF MODULE MAIN
 OBJECT MODULE PLACED IN main.obj
-COMPILER INVOKED BY: D:\duanxueqi\keil\C51\BIN\C51.EXE MAIN\main.c BROWSE INCDIR(D:\DUANXUEQI\KEIL\CODE\CONGJI1\UART\) D
+COMPILER INVOKED BY: D:\duanxueqi\keil\C51\BIN\C51.EXE MAIN\main.c BROWSE INCDIR(D:\duanxueqi\keil\code\congji2\UART\) D
                     -EBUG OBJECTEXTEND PRINT(.\main.lst) OBJECT(main.obj)
 
 stmt level    source

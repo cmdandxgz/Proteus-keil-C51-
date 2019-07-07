@@ -1,7 +1,8 @@
 #include "display.h"
+#include "include.h"
 #include <reg51.h>
 #include <intrins.h>
-#define uchar unsigned char
+
 
 sbit dula=P2^6;		//段选
 sbit wela=P2^7;		//位选
@@ -35,7 +36,7 @@ void displayOne(int wei, int num) {
 }
 
 void displayAll(int congji, uchar num) {	
-	int x = 10;
+	int x = 8;
 	displayOne(0, congji/10);		// 显示从机号
 	delay(x);
 	displayOne(1, congji%10);
@@ -47,6 +48,8 @@ void displayAll(int congji, uchar num) {
 	delay(x);
 	displayOne(7, num%10);
 	delay(x);
+
+	displayClear();
 }
 
 void displayClear() {

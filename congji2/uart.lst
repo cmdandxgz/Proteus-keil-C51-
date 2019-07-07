@@ -1,9 +1,9 @@
-C51 COMPILER V7.06   UART                                                                  07/07/2019 14:18:25 PAGE 1   
+C51 COMPILER V7.06   UART                                                                  07/07/2019 15:58:51 PAGE 1   
 
 
 C51 COMPILER V7.06, COMPILATION OF MODULE UART
 OBJECT MODULE PLACED IN uart.obj
-COMPILER INVOKED BY: D:\duanxueqi\keil\C51\BIN\C51.EXE UART\uart.c BROWSE INCDIR(D:\DUANXUEQI\KEIL\CODE\CONGJI1\UART\) D
+COMPILER INVOKED BY: D:\duanxueqi\keil\C51\BIN\C51.EXE UART\uart.c BROWSE INCDIR(D:\duanxueqi\keil\code\congji2\UART\) D
                     -EBUG OBJECTEXTEND PRINT(.\uart.lst) OBJECT(uart.obj)
 
 stmt level    source
@@ -12,7 +12,7 @@ stmt level    source
    2          #include <reg51.h>
    3          #include <intrins.h>
    4          #define uchar unsigned char
-   5          #define ADDR 0x20
+   5          #define ADDR 0x30
    6          #define CMD 0x01
    7          
    8          sbit STAR = P2^3;
@@ -62,7 +62,7 @@ stmt level    source
   52   1      
   53   1              RI = 0;
   54   1              ES = 1;
-C51 COMPILER V7.06   UART                                                                  07/07/2019 14:18:25 PAGE 2   
+C51 COMPILER V7.06   UART                                                                  07/07/2019 15:58:51 PAGE 2   
 
   55   1      }
 

@@ -1,0 +1,46 @@
+C51 COMPILER V7.06   DAC                                                                   07/07/2019 16:56:14 PAGE 1   
+
+
+C51 COMPILER V7.06, COMPILATION OF MODULE DAC
+OBJECT MODULE PLACED IN dac.obj
+COMPILER INVOKED BY: D:\duanxueqi\keil\C51\BIN\C51.EXE DAC\dac.c BROWSE INCDIR(D:\duanxueqi\keil\code\zhuji\DISPLAY\;D:\
+                    -duanxueqi\keil\code\zhuji\UART\;D:\duanxueqi\keil\code\zhuji\KEY\;D:\duanxueqi\keil\code\;D:\DUANXUEQI\KEIL\CODE\ZHUJI\D
+                    -AC\) DEBUG OBJECTEXTEND PRINT(.\dac.lst) OBJECT(dac.obj)
+
+stmt level    source
+
+   1          #include <reg51.h>
+   2          #include "dac.h"
+   3          
+   4          sbit LE = P2^3;
+   5          sbit CS = P2^2;
+   6          
+   7          
+   8          void dacInit(){
+   9   1              outLock(0xf0);
+  10   1      }
+  11          
+  12          void outLock(uchar out) {
+  13   1              LE = 1;
+  14   1              P1 = out;
+  15   1              LE = 0;
+  16   1      }
+  17          
+  18          void outDac(uchar out) {
+  19   1              outLock(out);
+  20   1              CS = 0;
+  21   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     18    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

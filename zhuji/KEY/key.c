@@ -2,9 +2,8 @@
 #include "display.h"
 #include "key.h"
 #include "uart.h"
-
-unsigned char star = 0;
-
+#include "include.h"
+uchar star;
 sbit key = P3^2;
 void keyInit() {
 	IT0 = 1;   //下降沿触发
@@ -20,19 +19,17 @@ void keyInt() interrupt 0 {
 
 void keyScand() {
 	if(key == 0) {
-		delay(10); //1ms
-		while(key == 0){;}
+		delay(1); //0.1ms
 		if(star == 0) {	//开始
-			ES = 1;
 			star = 1;
-			uartWrite(20, 1);
-			uartWrite(30, 1);
+			TR0 = 1;
 		} else {
-			ES = 0;
 			star = 0;	//停止
-			uartWrite(20, 0);
-			uartWrite(30, 0);
+			readData = 0;
+			TR0 = 0;
+			time = 0;
 			displayClear();
 		}
+		while(key != 0){;}
 	}
 }

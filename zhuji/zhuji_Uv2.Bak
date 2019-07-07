@@ -4,10 +4,14 @@
 Target (Target 1), 0x0000 // Tools: 'MCS-51'
 
 Group (main)
+Group (DISPLAY)
 Group (UART)
+Group (KEY)
 
-File 1,1,<.\MAIN\main.c><main.c> 0x0 
-File 2,1,<.\UART\uart.c><uart.c> 0x0 
+File 1,1,<.\main.c><main.c> 0x0 
+File 2,1,<.\DISPLAY\display.c><display.c> 0x0 
+File 3,1,<.\UART\uart.c><uart.c> 0x0 
+File 4,1,<.\KEY\key.c><key.c> 0x0 
 
 
 Options 1,0,0  // Target 'Target 1'
@@ -31,7 +35,7 @@ Options 1,0,0  // Target 'Target 1'
  OrgReg (ÿAtmel\)
  TgStat=0
  OutDir (.\)
- OutName (congji1)
+ OutName (zhuji)
  GenApp=1
  GenLib=0
  GenHex=1
@@ -67,7 +71,7 @@ Options 1,0,0  // Target 'Target 1'
  C51MSC ()
  C51DEF ()
  C51UDF ()
- INCC5 (D:\DUANXUEQI\KEIL\CODE\CONGJI1\UART\)
+ INCC5 (D:\duanxueqi\keil\code\zhuji\DISPLAY\;D:\duanxueqi\keil\code\zhuji\UART\;D:\duanxueqi\keil\code\zhuji\KEY\)
  AX51FL=4
  AX51MSC ()
  AX51SET ()
